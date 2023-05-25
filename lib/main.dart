@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:us_stock_app/color_schemes.g.dart';
+import 'package:hive/hive.dart';
+import 'package:us_stock_app/data/source/local/company_listing_entity.dart';
+import 'package:us_stock_app/util/color_schemes.dart';
 
 void main() {
+  Hive.registerAdapter(CompanyListingEntityAdapter());
   runApp(const MyApp());
 }
 
@@ -16,10 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: lightColorScheme,
         useMaterial3: true,
       ),
-      darkTheme: ThemeData(
-        colorScheme: darkColorScheme,
-        useMaterial3: true
-      ),
+      darkTheme: ThemeData(colorScheme: darkColorScheme, useMaterial3: true),
       themeMode: ThemeMode.system,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -36,12 +37,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

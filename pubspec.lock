@@ -291,6 +291,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  hive_generator:
+    dependency: "direct dev"
+    description:
+      name: hive_generator
+      sha256: "65998cc4d2cd9680a3d9709d893d2f6bb15e6c1f92626c3f1fa650b4b3281521"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -515,6 +523,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  retrofit:
+    dependency: "direct main"
+    description:
+      name: retrofit
+      sha256: "5eedbd8f73697f190dabc88520e0bcf2d3b2d9b9ad5c837f1dbb3ee6172d7709"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
+  retrofit_generator:
+    dependency: "direct dev"
+    description:
+      name: retrofit_generator
+      sha256: "7c0cca6106a8bc14ade20120700a3f607a932413f37d180e095b4658d415c6c8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.1"
   shelf:
     dependency: transitive
     description:
@@ -616,6 +640,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      sha256: "0ea99cd2f9352b2586583ab2ce6489d1f95a5f6de6fb9492faaf97ae2060f0aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   typed_data:
     dependency: transitive
     description:
