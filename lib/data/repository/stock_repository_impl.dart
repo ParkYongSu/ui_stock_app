@@ -1,3 +1,4 @@
+import 'package:us_stock_app/data/csv/csv_company_listing_parser.dart';
 import 'package:us_stock_app/data/source/local/stock_dao.dart';
 import 'package:us_stock_app/data/source/mapper/company_mapper.dart';
 import 'package:us_stock_app/data/source/remote/listing_params.dart';
@@ -16,6 +17,8 @@ class StockRepositoryImpl implements StockRepository {
     required this.dao,
   });
 
+  final CsvCompanyListingParser _parser = CsvCompanyListingParser();
+
   @override
   Future<Result<List<CompanyListing>>> getCompanyListing({
     required bool fetchLocal,
@@ -33,13 +36,19 @@ class StockRepositoryImpl implements StockRepository {
     }
 
     try {
-      final remoteListings = await api.getListings(
+      final csv = await api.getListings(
         params: ListingParams(
           function: "LISTING_STATUS",
           apikey: apiKey,
         ),
       );
-      return Result.success(remoteListings);
+      final parsed = _parser.parseFromCsv(csv);
+
+      await dao.insert(
+        value: parsed.map((e) => e.toCompanyListingEntity()).toList(),
+      );
+
+      return Result.success(parsed);
     } catch (e) {
       return Result.error(Exception("데이터 로드 실패"));
     }

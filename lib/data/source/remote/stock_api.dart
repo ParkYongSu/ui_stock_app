@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:us_stock_app/data/source/remote/listing_params.dart';
-import 'package:us_stock_app/domain/model/company_listing.dart';
 
 part 'stock_api.g.dart';
 
@@ -11,7 +10,7 @@ abstract class StockApi {
       _StockApi;
 
   @GET("/query")
-  Future<List<CompanyListing>> getListings({
+  Future<String> getListings({
     @Queries() required ListingParams params,
   });
 }
