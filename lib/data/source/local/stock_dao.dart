@@ -1,21 +1,21 @@
 import 'package:hive/hive.dart';
 import 'package:us_stock_app/data/source/local/company_listing_entity.dart';
+import 'package:us_stock_app/util/db.dart';
 
 class StockDao {
-  static const String companyListingKey = "companyListing";
-  final _box = Hive.box("stock.db");
-
   Future<void> insert({required List<CompanyListingEntity> value}) async {
-    await _box.put(companyListingKey, value);
+    final box = await Hive.openBox<CompanyListingEntity>(stockDB);
+    await box.addAll(value);
   }
 
   Future<void> clear() async {
-    await _box.clear();
+    final box = await Hive.openBox<CompanyListingEntity>(stockDB);
+    await box.clear();
   }
 
   Future<List<CompanyListingEntity>> search({required String query}) async {
-    final data = await _box.get(companyListingKey, defaultValue: [])
-        as List<CompanyListingEntity>;
+    final box = await Hive.openBox<CompanyListingEntity>(stockDB);
+    final data = box.values.toList();
 
     return data
         .where((element) =>

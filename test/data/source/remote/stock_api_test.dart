@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:us_stock_app/data/csv/csv_company_listing_parser.dart';
 import 'package:us_stock_app/data/source/remote/listing_params.dart';
 import 'package:us_stock_app/data/source/remote/stock_api.dart';

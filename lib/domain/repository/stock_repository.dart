@@ -3,7 +3,7 @@ import 'package:us_stock_app/util/result.dart';
 
 abstract class StockRepository {
   Future<Result<List<CompanyListing>>> getCompanyListing({
-    required bool fetchLocal,
+    required bool fetchFromRemote,
     required String query,
   });
 }

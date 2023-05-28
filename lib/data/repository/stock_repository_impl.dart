@@ -21,15 +21,15 @@ class StockRepositoryImpl implements StockRepository {
 
   @override
   Future<Result<List<CompanyListing>>> getCompanyListing({
-    required bool fetchLocal,
+    required bool fetchFromRemote,
     required String query,
   }) async {
     final localListings = await dao.search(query: query);
 
     final isDbEmpty = localListings.isEmpty;
-    final shouldLoadFromLocal = !isDbEmpty && (fetchLocal || query.isEmpty);
+    final shouldLoadLocal = !isDbEmpty && !fetchFromRemote;
 
-    if (shouldLoadFromLocal) {
+    if (shouldLoadLocal) {
       return Result.success(
         localListings.map((e) => e.toCompanyListing()).toList(),
       );
@@ -44,6 +44,7 @@ class StockRepositoryImpl implements StockRepository {
       );
       final parsed = _parser.parseFromCsv(csv);
 
+      await dao.clear();
       await dao.insert(
         value: parsed.map((e) => e.toCompanyListingEntity()).toList(),
       );
