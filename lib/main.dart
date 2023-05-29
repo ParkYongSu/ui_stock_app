@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:us_stock_app/data/repository/stock_repository_impl.dart';
 import 'package:us_stock_app/data/source/local/company_listing_entity.dart';
@@ -11,7 +10,6 @@ import 'package:us_stock_app/presentation/company_listings/company_listings_scre
 import 'package:us_stock_app/presentation/company_listings/company_listings_view_model.dart';
 import 'package:us_stock_app/util/api.dart';
 import 'package:us_stock_app/util/color_schemes.dart';
-import 'package:us_stock_app/util/db.dart';
 
 void main() async {
   await Hive.initFlutter();

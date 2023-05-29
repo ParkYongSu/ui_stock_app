@@ -45,14 +45,17 @@ class CompanyListingsViewModel extends ChangeNotifier {
 
     result.when(
       success: (listings) {
-        _state = _state.copyWith(companyListings: listings);
+        _state = _state.copyWith(
+          companyListings: listings,
+          isLoading: false,
+        );
       },
       error: (e) {
+        _state = _state.copyWith(isLoading: false);
         print("에러 발생 ${e.toString()}");
       },
     );
 
-    _state = _state.copyWith(isLoading: false);
     notifyListeners();
   }
 }

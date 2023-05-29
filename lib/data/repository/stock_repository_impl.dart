@@ -3,6 +3,7 @@ import 'package:us_stock_app/data/source/local/stock_dao.dart';
 import 'package:us_stock_app/data/source/mapper/company_mapper.dart';
 import 'package:us_stock_app/data/source/remote/listing_params.dart';
 import 'package:us_stock_app/data/source/remote/stock_api.dart';
+import 'package:us_stock_app/domain/model/company_info.dart';
 import 'package:us_stock_app/domain/model/company_listing.dart';
 import 'package:us_stock_app/domain/repository/stock_repository.dart';
 import 'package:us_stock_app/util/api.dart';
@@ -38,7 +39,7 @@ class StockRepositoryImpl implements StockRepository {
     try {
       final csv = await api.getListings(
         params: ListingParams(
-          function: "LISTING_STATUS",
+          function: ApiFunction.LISTING_STATUS.name,
           apikey: apiKey,
         ),
       );
@@ -52,6 +53,22 @@ class StockRepositoryImpl implements StockRepository {
       return Result.success(parsed);
     } catch (e) {
       return Result.error(Exception("데이터 로드 실패"));
+    }
+  }
+
+  @override
+  Future<Result<CompanyInfo>> getCompanyInfo({required String symbol}) async {
+    try {
+      final data = await api.getCompanyInfo(
+          params: ListingParams(
+            function: ApiFunction.OVERVIEW.name,
+            apikey: apiKey,
+            symbol: symbol,
+          ));
+
+      return Result.success(data.toCompanyInfo());
+    } catch (e) {
+      return Result.error(Exception("회사 정보 로드 실패 ${e.toString()}"));
     }
   }
 }
