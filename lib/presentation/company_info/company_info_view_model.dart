@@ -6,11 +6,13 @@ class CompanyInfoViewModel extends ChangeNotifier {
   final StockRepository repository;
   CompanyInfoState _state = CompanyInfoState();
 
-  CompanyInfoViewModel({required this.repository});
+  CompanyInfoViewModel({required this.repository, required String symbol}) {
+    _getCompanyInfo(symbol: symbol);
+  }
 
   CompanyInfoState get state => _state;
 
-  Future<void> getCompanyInfo({required String symbol}) async {
+  Future<void> _getCompanyInfo({required String symbol}) async {
     _state = _state.copyWith(isLoading: true);
     notifyListeners();
 
@@ -20,12 +22,39 @@ class CompanyInfoViewModel extends ChangeNotifier {
         _state = _state.copyWith(
           companyInfo: info,
           isLoading: false,
+          errorMessage: null,
         );
       },
       error: (e) {
         _state = _state.copyWith(
           companyInfo: null,
           isLoading: false,
+          errorMessage: e.toString(),
+        );
+      },
+    );
+
+    notifyListeners();
+
+    final intraDayInfo = await repository.getIntraDayInfo(
+      symbol: symbol,
+      interval: "60min",
+      dataType: "csv",
+    );
+
+    intraDayInfo.when(
+      success: (info) {
+        _state = _state.copyWith(
+          stockInfos: info,
+          isLoading: false,
+          errorMessage: null,
+        );
+      },
+      error: (e) {
+        _state = _state.copyWith(
+          stockInfos: [],
+          isLoading: false,
+          errorMessage: e.toString(),
         );
       },
     );

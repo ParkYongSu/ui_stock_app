@@ -22,6 +22,8 @@ ListingParams _$ListingParamsFromJson(Map<String, dynamic> json) {
 mixin _$ListingParams {
   String get function => throw _privateConstructorUsedError;
   String? get symbol => throw _privateConstructorUsedError;
+  String? get interval => throw _privateConstructorUsedError;
+  String? get datatype => throw _privateConstructorUsedError;
   String get apikey => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +38,12 @@ abstract class $ListingParamsCopyWith<$Res> {
           ListingParams value, $Res Function(ListingParams) then) =
       _$ListingParamsCopyWithImpl<$Res, ListingParams>;
   @useResult
-  $Res call({String function, String? symbol, String apikey});
+  $Res call(
+      {String function,
+      String? symbol,
+      String? interval,
+      String? datatype,
+      String apikey});
 }
 
 /// @nodoc
@@ -54,6 +61,8 @@ class _$ListingParamsCopyWithImpl<$Res, $Val extends ListingParams>
   $Res call({
     Object? function = null,
     Object? symbol = freezed,
+    Object? interval = freezed,
+    Object? datatype = freezed,
     Object? apikey = null,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +73,14 @@ class _$ListingParamsCopyWithImpl<$Res, $Val extends ListingParams>
       symbol: freezed == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
+              as String?,
+      interval: freezed == interval
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as String?,
+      datatype: freezed == datatype
+          ? _value.datatype
+          : datatype // ignore: cast_nullable_to_non_nullable
               as String?,
       apikey: null == apikey
           ? _value.apikey
@@ -81,7 +98,12 @@ abstract class _$$_ListingParamsCopyWith<$Res>
       __$$_ListingParamsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String function, String? symbol, String apikey});
+  $Res call(
+      {String function,
+      String? symbol,
+      String? interval,
+      String? datatype,
+      String apikey});
 }
 
 /// @nodoc
@@ -97,6 +119,8 @@ class __$$_ListingParamsCopyWithImpl<$Res>
   $Res call({
     Object? function = null,
     Object? symbol = freezed,
+    Object? interval = freezed,
+    Object? datatype = freezed,
     Object? apikey = null,
   }) {
     return _then(_$_ListingParams(
@@ -107,6 +131,14 @@ class __$$_ListingParamsCopyWithImpl<$Res>
       symbol: freezed == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
+              as String?,
+      interval: freezed == interval
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as String?,
+      datatype: freezed == datatype
+          ? _value.datatype
+          : datatype // ignore: cast_nullable_to_non_nullable
               as String?,
       apikey: null == apikey
           ? _value.apikey
@@ -119,7 +151,12 @@ class __$$_ListingParamsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ListingParams implements _ListingParams {
-  _$_ListingParams({required this.function, this.symbol, required this.apikey});
+  _$_ListingParams(
+      {required this.function,
+      this.symbol,
+      this.interval,
+      this.datatype,
+      required this.apikey});
 
   factory _$_ListingParams.fromJson(Map<String, dynamic> json) =>
       _$$_ListingParamsFromJson(json);
@@ -129,11 +166,15 @@ class _$_ListingParams implements _ListingParams {
   @override
   final String? symbol;
   @override
+  final String? interval;
+  @override
+  final String? datatype;
+  @override
   final String apikey;
 
   @override
   String toString() {
-    return 'ListingParams(function: $function, symbol: $symbol, apikey: $apikey)';
+    return 'ListingParams(function: $function, symbol: $symbol, interval: $interval, datatype: $datatype, apikey: $apikey)';
   }
 
   @override
@@ -144,12 +185,17 @@ class _$_ListingParams implements _ListingParams {
             (identical(other.function, function) ||
                 other.function == function) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
+            (identical(other.interval, interval) ||
+                other.interval == interval) &&
+            (identical(other.datatype, datatype) ||
+                other.datatype == datatype) &&
             (identical(other.apikey, apikey) || other.apikey == apikey));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, function, symbol, apikey);
+  int get hashCode =>
+      Object.hash(runtimeType, function, symbol, interval, datatype, apikey);
 
   @JsonKey(ignore: true)
   @override
@@ -169,6 +215,8 @@ abstract class _ListingParams implements ListingParams {
   factory _ListingParams(
       {required final String function,
       final String? symbol,
+      final String? interval,
+      final String? datatype,
       required final String apikey}) = _$_ListingParams;
 
   factory _ListingParams.fromJson(Map<String, dynamic> json) =
@@ -178,6 +226,10 @@ abstract class _ListingParams implements ListingParams {
   String get function;
   @override
   String? get symbol;
+  @override
+  String? get interval;
+  @override
+  String? get datatype;
   @override
   String get apikey;
   @override

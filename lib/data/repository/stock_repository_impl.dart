@@ -1,10 +1,12 @@
 import 'package:us_stock_app/data/csv/csv_company_listing_parser.dart';
+import 'package:us_stock_app/data/csv/csv_intra_day_info_parser.dart';
 import 'package:us_stock_app/data/source/local/stock_dao.dart';
 import 'package:us_stock_app/data/source/mapper/company_mapper.dart';
 import 'package:us_stock_app/data/source/remote/listing_params.dart';
 import 'package:us_stock_app/data/source/remote/stock_api.dart';
 import 'package:us_stock_app/domain/model/company_info.dart';
 import 'package:us_stock_app/domain/model/company_listing.dart';
+import 'package:us_stock_app/domain/model/intra_day_info.dart';
 import 'package:us_stock_app/domain/repository/stock_repository.dart';
 import 'package:us_stock_app/util/api.dart';
 import 'package:us_stock_app/util/result.dart';
@@ -18,7 +20,9 @@ class StockRepositoryImpl implements StockRepository {
     required this.dao,
   });
 
-  final CsvCompanyListingParser _parser = CsvCompanyListingParser();
+  final CsvCompanyListingParser _companyListingParser =
+      CsvCompanyListingParser();
+  final CsvIntraDayInfoParser _intraDayInfoParser = CsvIntraDayInfoParser();
 
   @override
   Future<Result<List<CompanyListing>>> getCompanyListing({
@@ -43,7 +47,7 @@ class StockRepositoryImpl implements StockRepository {
           apikey: apiKey,
         ),
       );
-      final parsed = _parser.parseFromCsv(csv);
+      final parsed = _companyListingParser.parseFromCsv(csv);
 
       await dao.clear();
       await dao.insert(
@@ -61,14 +65,38 @@ class StockRepositoryImpl implements StockRepository {
     try {
       final data = await api.getCompanyInfo(
           params: ListingParams(
-            function: ApiFunction.OVERVIEW.name,
-            apikey: apiKey,
-            symbol: symbol,
-          ));
+        function: ApiFunction.OVERVIEW.name,
+        apikey: apiKey,
+        symbol: symbol,
+      ));
 
       return Result.success(data.toCompanyInfo());
     } catch (e) {
       return Result.error(Exception("회사 정보 로드 실패 ${e.toString()}"));
+    }
+  }
+
+  @override
+  Future<Result<List<IntraDayInfo>>> getIntraDayInfo({
+    required String symbol,
+    required String interval,
+    required String dataType,
+  }) async {
+    try {
+      final csv = await api.getIntraDayInfo(
+        params: ListingParams(
+          function: ApiFunction.TIME_SERIES_INTRADAY.name,
+          apikey: apiKey,
+          interval: interval,
+          symbol: symbol,
+          datatype: dataType,
+        ),
+      );
+
+      final parsed = _intraDayInfoParser.parseFromCsv(csv);
+      return Result.success(parsed);
+    } catch (e) {
+      return Result.error(Exception(e.toString()));
     }
   }
 }

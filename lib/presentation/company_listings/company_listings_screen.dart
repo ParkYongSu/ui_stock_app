@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:us_stock_app/domain/repository/stock_repository.dart';
+import 'package:us_stock_app/presentation/company_info/company_info_screen.dart';
+import 'package:us_stock_app/presentation/company_info/company_info_view_model.dart';
 import 'package:us_stock_app/presentation/company_listings/company_listings_action.dart';
 import 'package:us_stock_app/presentation/company_listings/company_listings_view_model.dart';
 
@@ -52,17 +56,33 @@ class CompanyListingsScreen extends StatelessWidget {
                 },
                 child: ListView.separated(
                   itemBuilder: (_, index) {
+                    final data = state.companyListings[index];
                     return ListTile(
-                      title: Text(
-                        state.companyListings[index].name,
-                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) {
+                              final repository =
+                                  GetIt.instance<StockRepository>();
+                              return ChangeNotifierProvider(
+                                lazy: false,
+                                create: (_) => CompanyInfoViewModel(
+                                  repository: repository,
+                                  symbol: data.symbol,
+                                ),
+                                child: const CompanyInfoScreen(),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      title: Text(data.name),
                     );
                   },
-                  separatorBuilder: (_, __) {
-                    return Divider(
-                      color: Theme.of(context).colorScheme.secondary,
-                    );
-                  },
+                  separatorBuilder: (_, __) => Divider(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                   itemCount: state.companyListings.length,
                 ),
               ),

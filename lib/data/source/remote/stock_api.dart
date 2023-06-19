@@ -18,4 +18,9 @@ abstract class StockApi {
   Future<CompanyInfoDto> getCompanyInfo({
     @Queries() required ListingParams params,
   });
+
+  @GET("/query")
+  Future<String> getIntraDayInfo({
+    @Queries() required ListingParams params,
+  });
 }

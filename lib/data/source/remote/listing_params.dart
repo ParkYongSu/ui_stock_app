@@ -9,6 +9,8 @@ class ListingParams with _$ListingParams {
   factory ListingParams({
     required String function,
     String? symbol,
+    String? interval,
+    String? datatype,
     required String apikey,
   }) = _ListingParams;
 

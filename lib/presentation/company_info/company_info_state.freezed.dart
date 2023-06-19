@@ -21,7 +21,9 @@ CompanyInfoState _$CompanyInfoStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CompanyInfoState {
   CompanyInfo? get companyInfo => throw _privateConstructorUsedError;
+  List<IntraDayInfo> get stockInfos => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,11 @@ abstract class $CompanyInfoStateCopyWith<$Res> {
           CompanyInfoState value, $Res Function(CompanyInfoState) then) =
       _$CompanyInfoStateCopyWithImpl<$Res, CompanyInfoState>;
   @useResult
-  $Res call({CompanyInfo? companyInfo, bool isLoading});
+  $Res call(
+      {CompanyInfo? companyInfo,
+      List<IntraDayInfo> stockInfos,
+      bool isLoading,
+      String? errorMessage});
 
   $CompanyInfoCopyWith<$Res>? get companyInfo;
 }
@@ -54,17 +60,27 @@ class _$CompanyInfoStateCopyWithImpl<$Res, $Val extends CompanyInfoState>
   @override
   $Res call({
     Object? companyInfo = freezed,
+    Object? stockInfos = null,
     Object? isLoading = null,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       companyInfo: freezed == companyInfo
           ? _value.companyInfo
           : companyInfo // ignore: cast_nullable_to_non_nullable
               as CompanyInfo?,
+      stockInfos: null == stockInfos
+          ? _value.stockInfos
+          : stockInfos // ignore: cast_nullable_to_non_nullable
+              as List<IntraDayInfo>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -89,7 +105,11 @@ abstract class _$$_CompanyInfoStateCopyWith<$Res>
       __$$_CompanyInfoStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({CompanyInfo? companyInfo, bool isLoading});
+  $Res call(
+      {CompanyInfo? companyInfo,
+      List<IntraDayInfo> stockInfos,
+      bool isLoading,
+      String? errorMessage});
 
   @override
   $CompanyInfoCopyWith<$Res>? get companyInfo;
@@ -107,17 +127,27 @@ class __$$_CompanyInfoStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? companyInfo = freezed,
+    Object? stockInfos = null,
     Object? isLoading = null,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$_CompanyInfoState(
       companyInfo: freezed == companyInfo
           ? _value.companyInfo
           : companyInfo // ignore: cast_nullable_to_non_nullable
               as CompanyInfo?,
+      stockInfos: null == stockInfos
+          ? _value._stockInfos
+          : stockInfos // ignore: cast_nullable_to_non_nullable
+              as List<IntraDayInfo>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -125,20 +155,37 @@ class __$$_CompanyInfoStateCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CompanyInfoState implements _CompanyInfoState {
-  _$_CompanyInfoState({this.companyInfo, this.isLoading = false});
+  _$_CompanyInfoState(
+      {this.companyInfo,
+      final List<IntraDayInfo> stockInfos = const [],
+      this.isLoading = false,
+      this.errorMessage = null})
+      : _stockInfos = stockInfos;
 
   factory _$_CompanyInfoState.fromJson(Map<String, dynamic> json) =>
       _$$_CompanyInfoStateFromJson(json);
 
   @override
   final CompanyInfo? companyInfo;
+  final List<IntraDayInfo> _stockInfos;
+  @override
+  @JsonKey()
+  List<IntraDayInfo> get stockInfos {
+    if (_stockInfos is EqualUnmodifiableListView) return _stockInfos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_stockInfos);
+  }
+
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final String? errorMessage;
 
   @override
   String toString() {
-    return 'CompanyInfoState(companyInfo: $companyInfo, isLoading: $isLoading)';
+    return 'CompanyInfoState(companyInfo: $companyInfo, stockInfos: $stockInfos, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -148,13 +195,22 @@ class _$_CompanyInfoState implements _CompanyInfoState {
             other is _$_CompanyInfoState &&
             (identical(other.companyInfo, companyInfo) ||
                 other.companyInfo == companyInfo) &&
+            const DeepCollectionEquality()
+                .equals(other._stockInfos, _stockInfos) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, companyInfo, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      companyInfo,
+      const DeepCollectionEquality().hash(_stockInfos),
+      isLoading,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -173,7 +229,9 @@ class _$_CompanyInfoState implements _CompanyInfoState {
 abstract class _CompanyInfoState implements CompanyInfoState {
   factory _CompanyInfoState(
       {final CompanyInfo? companyInfo,
-      final bool isLoading}) = _$_CompanyInfoState;
+      final List<IntraDayInfo> stockInfos,
+      final bool isLoading,
+      final String? errorMessage}) = _$_CompanyInfoState;
 
   factory _CompanyInfoState.fromJson(Map<String, dynamic> json) =
       _$_CompanyInfoState.fromJson;
@@ -181,7 +239,11 @@ abstract class _CompanyInfoState implements CompanyInfoState {
   @override
   CompanyInfo? get companyInfo;
   @override
+  List<IntraDayInfo> get stockInfos;
+  @override
   bool get isLoading;
+  @override
+  String? get errorMessage;
   @override
   @JsonKey(ignore: true)
   _$$_CompanyInfoStateCopyWith<_$_CompanyInfoState> get copyWith =>
