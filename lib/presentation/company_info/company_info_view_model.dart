@@ -21,14 +21,12 @@ class CompanyInfoViewModel extends ChangeNotifier {
       success: (info) {
         _state = _state.copyWith(
           companyInfo: info,
-          isLoading: false,
           errorMessage: null,
         );
       },
       error: (e) {
         _state = _state.copyWith(
           companyInfo: null,
-          isLoading: false,
           errorMessage: e.toString(),
         );
       },
@@ -45,7 +43,7 @@ class CompanyInfoViewModel extends ChangeNotifier {
     intraDayInfo.when(
       success: (info) {
         _state = _state.copyWith(
-          stockInfos: info,
+          stockInfos: info.reversed.toList(),
           isLoading: false,
           errorMessage: null,
         );
